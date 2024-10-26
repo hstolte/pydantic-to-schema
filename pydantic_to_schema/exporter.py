@@ -29,7 +29,7 @@ def export_models(input_folder: str, output_folder: str):
         if isclass(obj) and issubclass(obj, BaseModel):
             schema_path = path.join(out_path, f'{key}.json')
             with open(schema_path, 'w', encoding='utf-8') as file:
-                file.write(obj.schema_json(indent=2))
+                file.write(obj.model_json_schema(mode="serialization"))
                 print(f"Exporting {key} model as {key} JSON Schema")
 
     print("Models exported!")
