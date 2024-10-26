@@ -1,4 +1,5 @@
 # Standard Library
+import json
 from argparse import ArgumentParser
 from inspect import getmembers, isclass
 from os import makedirs, path
@@ -29,7 +30,8 @@ def export_models(input_folder: str, output_folder: str):
         if isclass(obj) and issubclass(obj, BaseModel):
             schema_path = path.join(out_path, f'{key}.json')
             with open(schema_path, 'w', encoding='utf-8') as file:
-                file.write(obj.model_json_schema(mode="serialization"))
+                schema = obj.model_json_schema(mode="serialization")
+                file.write(json.dumps(schema, indent=2))
                 print(f"Exporting {key} model as {key} JSON Schema")
 
     print("Models exported!")
